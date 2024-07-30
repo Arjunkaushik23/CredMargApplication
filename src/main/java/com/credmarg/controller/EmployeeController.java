@@ -2,7 +2,8 @@ package com.credmarg.controller;
 
 import com.credmarg.model.Employee;
 import com.credmarg.service.EmployeeService;
-import org.springframework.stereotype.Controller;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,24 +11,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/employees")
 @CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
-
-
     @PostMapping
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeService.createEmployee(employee);
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+        return ResponseEntity.ok(employeeService.createEmployee(employee));
     }
 
     @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public ResponseEntity<List<Employee>> getAllEmployees() {
+        return ResponseEntity.ok(employeeService.getAllEmployees());
     }
-
 
 }
